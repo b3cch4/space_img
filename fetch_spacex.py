@@ -1,7 +1,7 @@
 import os, requests
 from datetime import datetime
 from urllib.parse import urlparse, unquote
-from downl_img_to_fold_def import downl_img_to_fold
+from downl_img_to_fold_def import ddownload_images_to_folder
 
 url_spacex = 'https://api.spacexdata.com/v4/launches/'
 path_spacex = "images/spacex"
@@ -15,7 +15,7 @@ def fetch_spacex_last_launch(url_spacex, path_spacex):
                 list_of_spacex_links = item['links']['flickr']['original']
                 break
         for serial_number, link in enumerate(list_of_spacex_links):
-            downl_img_to_fold(link, path_spacex, serial_number)
+            download_images_to_folder(link, path_spacex, serial_number)
 
 def main():
     fetch_spacex_last_launch(url_spacex, path_spacex)

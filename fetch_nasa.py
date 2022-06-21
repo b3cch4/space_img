@@ -1,7 +1,7 @@
 import os, requests
 from datetime import datetime
 from urllib.parse import urlparse, unquote
-from downl_img_to_fold_def import downl_img_to_fold
+from downl_img_to_fold_def import download_images_to_folder
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -24,10 +24,10 @@ def fetch_nasa_apod_images(url_apod, payload, path_apod):
     response.raise_for_status()
     if type(response.json()) == dict:
         serial_number = datetime.now().date()
-        downl_img_to_fold(response.json()['url'], path_apod, serial_number)
+        download_images_to_folder(response.json()['url'], path_apod, serial_number)
     else:
         for serial_number, response in enumerate(response.json()):
-            downl_img_to_fold(response['url'], path_apod, serial_number)
+            download_images_to_folder(response['url'], path_apod, serial_number)
         
         
 def fetch_nasa_epic_images(url_epic, path_epic, api_key):
@@ -46,7 +46,7 @@ def fetch_nasa_epic_images(url_epic, path_epic, api_key):
             f'{epic_url}/{year}/{month}/{day}/png/{name}.png?api_key={api_key}'
         )
     for serial_number, item_url in enumerate(list_of_epic):
-        downl_img_to_fold(item_url, path_epic, serial_number)    
+        download_images_to_folder(item_url, path_epic, serial_number)    
 
 
 def main():
