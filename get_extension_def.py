@@ -1,3 +1,6 @@
+import os
+from urllib.parse import urlparse, unquote
+
 def get_extension(url):
     '''Функция, возвращающая расширение файла'''
     ext = (

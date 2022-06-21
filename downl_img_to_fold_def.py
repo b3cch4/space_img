@@ -1,3 +1,6 @@
+import os, requests
+from get_extension_def import get_extension
+
 def downl_img_to_fold(url, path, serial_number):
     '''Функция загружает фотографии по ссылке, полученной в качестве аргумента <url>'''
     filename = f'{path}/{serial_number}.{get_extension(url)}'

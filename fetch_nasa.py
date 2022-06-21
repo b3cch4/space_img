@@ -1,9 +1,22 @@
 import os, requests
 from datetime import datetime
 from urllib.parse import urlparse, unquote
-from get_extension_def import get_extension
 from downl_img_to_fold_def import downl_img_to_fold
+from dotenv import load_dotenv
 
+load_dotenv()
+API_KEY_NASA = os.getenv('API_KEY_NASA')
+
+payload_apod = {
+    #'start_date': '2022-01-01', 
+    #'end_date': '2022-01-04',
+    'api_key': API_KEY_NASA
+}
+api_key = f'{API_KEY_NASA}'
+url_apod = 'https://api.nasa.gov/planetary/apod'
+url_epic = f'https://api.nasa.gov/EPIC/api/natural?api_key={API_KEY_NASA}'
+path_apod = "images/apod"
+path_epic = "images/epic"
 
 def fetch_nasa_apod_images(url_apod, payload, path_apod):
     '''Функция получает фотографии NASA из раздела =APOD='''
@@ -35,3 +48,11 @@ def fetch_nasa_epic_images(url_epic, path_epic, api_key):
     for serial_number, item_url in enumerate(list_of_epic):
         downl_img_to_fold(item_url, path_epic, serial_number)    
 
+
+def main():
+    fetch_nasa_apod_images(url_apod, payload_apod, path_apod)
+    fetch_nasa_epic_images(url_epic, path_epic, api_key)
+
+
+if __name__ == '__main__':
+    main()
