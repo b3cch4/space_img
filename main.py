@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 API_KEY_NASA = os.getenv('API_KEY_NASA')
+API_BOT = os.getenv('API_BOT')
+CHAT_ID = os.getenv('CHAT_ID')
 
 payload_apod = {
     #'start_date': '2022-01-01', 
@@ -29,14 +31,14 @@ async def main():
         fetch_nasa_apod_images(url_apod, payload_apod, path_apod)
         fetch_nasa_epic_images(url_epic, path_epic, api_key)
         fetch_spacex_last_launch(url_spacex, path_spacex)
-        bot = telegram.Bot('5316370122:AAEwKTc3VvZPD1EBLzAtQ5gC9HO42YG0cFY')
+        bot = telegram.Bot(API_BOT)
         for address, dirs, files in os.walk('images'):
             for name in files:
                 async with bot:
                     await bot.send_document(
-                        chat_id=-1001633682543, 
+                        chat_id=int(CHAT_ID),
                         document=open(os.path.join(address, name), 'rb')
-                    ) 
+                    )
 
 
 if __name__ == '__main__':

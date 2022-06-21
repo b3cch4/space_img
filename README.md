@@ -14,9 +14,10 @@
 
 ## Установка
 ```bash
-git clone https://github.com/ukr41n/space_img.git
-cd space_img/ && pip install -r requirements.txt
-pip install python-telegram-bot --pre
+git clone https://github.com/b3cch4/space_img.git
+cd space_img/
+python -m venv env && source env/bin/activate
+pip install -r requirements.txt
 echo API_KEY_NASA = api_key >> .env
 ```
 
