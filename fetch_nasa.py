@@ -37,8 +37,8 @@ def fetch_nasa_epic_images(url_epic, api_key):
     response = requests.get(url_epic)
     response.raise_for_status()
     list_of_epic = []
-    for item_responce in response.json():
-        name = item_responce.get('image')
+    for item_response in response.json():
+        name = item_response.get('image')
         date_time = datetime.fromisoformat(response.json()[0].get('date'))
         year = date_time.strftime("%Y")
         month = date_time.strftime("%m")
