@@ -3,6 +3,7 @@ import time
 import asyncio
 import telegram
 from dotenv import load_dotenv
+load_dotenv()
 
 
 API_BOT = os.getenv('API_BOT')

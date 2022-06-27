@@ -18,11 +18,13 @@ git clone https://github.com/b3cch4/space_img.git
 cd space_img/
 python -m venv env && source env/bin/activate
 pip install -r requirements.txt
-echo API_KEY_NASA = api_key >> .env
+echo API_KEY_NASA = your_api_key_from_NASA >> .env
+echo API_BOT = your_api_for_telegram_bot >> .env
+echo CHAT_ID = your_chat_id >> .env
 ```
 
 ## Настройка и запуск
-По умолчанию фотогафия из раздела [APOD](https://api.nasa.gov/#apod) загружается ежедневно, но если раскомментировать строки 14 и 14 в файле *main.py*, заменив на диапазон чисел, можно получить фото за конкретный период времени.
+По умолчанию фотогафия из раздела [APOD](https://api.nasa.gov/#apod) загружается ежедневно, но если раскомментировать строки 12 и 13 в файле *fetch_nasa.py*, заменив на диапазон чисел, можно получить фото за конкретный период времени.
 ```
 'start_date': '2022-01-01', 
 'end_date': '2022-02-01',

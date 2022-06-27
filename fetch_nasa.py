@@ -2,12 +2,13 @@ import os, requests
 from datetime import datetime
 from urllib.parse import urlparse, unquote
 from downl_img_to_fold_def import download_images_to_folder
+from get_extension_def import get_extension
 from dotenv import load_dotenv
 
 load_dotenv()
 API_KEY_NASA = os.getenv('API_KEY_NASA')
 
-payload_apod = {
+payload = {
     #'start_date': '2022-01-01', 
     #'end_date': '2022-01-04',
     'api_key': API_KEY_NASA
@@ -15,22 +16,23 @@ payload_apod = {
 api_key = f'{API_KEY_NASA}'
 url_apod = 'https://api.nasa.gov/planetary/apod'
 url_epic = f'https://api.nasa.gov/EPIC/api/natural?api_key={API_KEY_NASA}'
-path_apod = "images/apod"
-path_epic = "images/epic"
 
-def fetch_nasa_apod_images(url_apod, payload, path_apod):
+
+def fetch_nasa_apod_images(url_apod, payload):
     '''Функция получает фотографии NASA из раздела =APOD='''
     response = requests.get(url_apod, params=payload)
     response.raise_for_status()
     if type(response.json()) == dict:
         serial_number = datetime.now().date()
-        download_images_to_folder(response.json()['url'], path_apod, serial_number)
+        path = f'images/apod/{serial_number}.{get_extension(response.json()["url"])}'
+        download_images_to_folder(response.json()['url'], path)
     else:
         for serial_number, response in enumerate(response.json()):
-            download_images_to_folder(response['url'], path_apod, serial_number)
+            path = f'images/apod/{serial_number}.{get_extension(response["url"])}'
+            download_images_to_folder(response['url'], path)
         
         
-def fetch_nasa_epic_images(url_epic, path_epic, api_key):
+def fetch_nasa_epic_images(url_epic, api_key):
     '''Функция получает фотографии NASA из раздела =EPIC='''
     response = requests.get(url_epic)
     response.raise_for_status()
@@ -46,12 +48,13 @@ def fetch_nasa_epic_images(url_epic, path_epic, api_key):
             f'{epic_url}/{year}/{month}/{day}/png/{name}.png?api_key={api_key}'
         )
     for serial_number, item_url in enumerate(list_of_epic):
-        download_images_to_folder(item_url, path_epic, serial_number)    
+        path = f'images/epic/{serial_number}.{get_extension(item_url)}' 
+        download_images_to_folder(item_url, path)  
 
 
 def main():
-    fetch_nasa_apod_images(url_apod, payload_apod, path_apod)
-    fetch_nasa_epic_images(url_epic, path_epic, api_key)
+    fetch_nasa_apod_images(url_apod, payload)
+    fetch_nasa_epic_images(url_epic, api_key)
 
 
 if __name__ == '__main__':
