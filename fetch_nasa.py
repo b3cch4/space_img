@@ -5,7 +5,7 @@ from downl_img_to_fold_def import download_images_to_folder
 from get_extension_def import get_extension
 from dotenv import load_dotenv
 
-load_dotenv()
+
 API_KEY_NASA = os.getenv('API_KEY_NASA')
 
 payload = {
@@ -34,6 +34,7 @@ def fetch_nasa_apod_images(url_apod, payload):
         
 def fetch_nasa_epic_images(url_epic, api_key):
     '''Функция получает фотографии NASA из раздела =EPIC='''
+    load_dotenv()
     response = requests.get(url_epic)
     response.raise_for_status()
     list_of_epic = []

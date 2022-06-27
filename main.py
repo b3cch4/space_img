@@ -3,7 +3,6 @@ import time
 import asyncio
 import telegram
 from dotenv import load_dotenv
-load_dotenv()
 
 
 API_BOT = os.getenv('API_BOT')
@@ -11,6 +10,7 @@ CHAT_ID = os.getenv('CHAT_ID')
 
 
 async def main():
+    load_dotenv()
     while True:
         time.sleep(10)
         bot = telegram.Bot(API_BOT)
