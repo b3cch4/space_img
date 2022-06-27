@@ -6,16 +6,7 @@ from get_extension_def import get_extension
 from dotenv import load_dotenv
 
 
-API_KEY_NASA = os.getenv('API_KEY_NASA')
 
-payload = {
-    #'start_date': '2022-01-01', 
-    #'end_date': '2022-01-04',
-    'api_key': API_KEY_NASA
-}
-api_key = f'{API_KEY_NASA}'
-url_apod = 'https://api.nasa.gov/planetary/apod'
-url_epic = f'https://api.nasa.gov/EPIC/api/natural?api_key={API_KEY_NASA}'
 
 
 def fetch_nasa_apod_images(url_apod, payload):
@@ -34,7 +25,6 @@ def fetch_nasa_apod_images(url_apod, payload):
         
 def fetch_nasa_epic_images(url_epic, api_key):
     '''Функция получает фотографии NASA из раздела =EPIC='''
-    load_dotenv()
     response = requests.get(url_epic)
     response.raise_for_status()
     list_of_epic = []
@@ -54,8 +44,17 @@ def fetch_nasa_epic_images(url_epic, api_key):
 
 
 def main():
+    load_dotenv()
+    API_KEY_NASA = os.getenv('API_KEY_NASA')
+    payload = {
+        #'start_date': '2022-01-01', 
+        #'end_date': '2022-01-04',
+        'api_key': API_KEY_NASA
+    }
+    url_apod = 'https://api.nasa.gov/planetary/apod'
+    url_epic = f'https://api.nasa.gov/EPIC/api/natural?api_key={API_KEY_NASA}'
     fetch_nasa_apod_images(url_apod, payload)
-    fetch_nasa_epic_images(url_epic, api_key)
+    fetch_nasa_epic_images(url_epic, API_KEY_NASA)
 
 
 if __name__ == '__main__':
