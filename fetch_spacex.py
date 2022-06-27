@@ -10,8 +10,9 @@ def fetch_spacex_last_launch(url):
         '''Функция получает фотографии последнего запуска шатла.'''
         response = requests.get(url)
         response.raise_for_status()
+        #print(type(not (response.json())[-1]['links']['flickr']['original']))
         for item in reversed(response.json()):
-            if item['links']['flickr']['original'] != []:
+            if item['links']['flickr']['original']:
                 list_of_spacex_links = item['links']['flickr']['original']
                 break
         for serial_number, link in enumerate(list_of_spacex_links):
