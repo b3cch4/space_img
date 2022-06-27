@@ -19,6 +19,7 @@ async def main():
                 async with bot:
                     await bot.send_document(
                         chat_id=int(CHAT_ID),
+                        #can't find solution for (15 of 16)
                         document=open(os.path.join(address, name), 'rb')
                     )
 

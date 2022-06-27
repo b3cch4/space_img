@@ -6,9 +6,6 @@ from get_extension_def import get_extension
 from dotenv import load_dotenv
 
 
-
-
-
 def fetch_nasa_apod_images(url_apod, payload):
     '''Функция получает фотографии NASA из раздела =APOD='''
     response = requests.get(url_apod, params=payload)
