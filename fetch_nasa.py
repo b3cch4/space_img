@@ -22,7 +22,7 @@ def fetch_nasa_apod_images(url_apod, payload):
     '''Функция получает фотографии NASA из раздела =APOD='''
     response = requests.get(url_apod, params=payload)
     response.raise_for_status()
-    if type(response.json()) == dict:
+    if isinstance(response.json(), dict):
         serial_number = datetime.now().date()
         path = f'images/apod/{serial_number}.{get_extension(response.json()["url"])}'
         download_images_to_folder(response.json()['url'], path)
