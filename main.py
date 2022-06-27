@@ -12,9 +12,9 @@ CHAT_ID = os.getenv('CHAT_ID')
 async def main():
     load_dotenv()
     while True:
-        time.sleep(10)
         bot = telegram.Bot(API_BOT)
         for address, dirs, files in os.walk('images'):
+            time.sleep(10)
             for name in files:
                 async with bot:
                     await bot.send_document(
