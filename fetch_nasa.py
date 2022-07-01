@@ -15,17 +15,17 @@ def fetch_nasa_apod_image(payload):
     if isinstance(response_json, dict):
         serial_number = datetime.now().date()
         path = f'images/apod/{serial_number}.{get_extension(response.json()["url"])}'
-        download_image_to_folder(response.json()['url'], path)
+        download_image_to_folder(response.json()['url'], path, payload)
     else:
         for serial_number, response in enumerate(response_json):
             path = f'images/apod/{serial_number}.{get_extension(response["url"])}'
-            download_image_to_folder(response['url'], path)
+            download_image_to_folder(response['url'], path, payload)
         
         
-def fetch_nasa_epic_image(api_key):
+def fetch_nasa_epic_image(payload):
     '''Функция получает фотографии NASA из раздела =EPIC='''
-    url_epic = f'https://api.nasa.gov/EPIC/api/natural?api_key={api_key}'
-    response = requests.get(url_epic)
+    url_epic = f'https://api.nasa.gov/EPIC/api/natural'
+    response = requests.get(url_epic, payload)
     response.raise_for_status()
     list_of_epic = []
     for item_response in response.json():
@@ -36,11 +36,11 @@ def fetch_nasa_epic_image(api_key):
         day = date_time.strftime("%d")
         epic_url = 'https://api.nasa.gov/EPIC/archive/natural'
         list_of_epic.append(
-            f'{epic_url}/{year}/{month}/{day}/png/{name}.png?api_key={api_key}'
+            f'{epic_url}/{year}/{month}/{day}/png/{name}.png'
         )
     for serial_number, item_url in enumerate(list_of_epic):
-        path = f'images/epic/{serial_number}.{get_extension(item_url)}' 
-        download_image_to_folder(item_url, path)  
+        path = f'images/epic/{serial_number}.{get_extension(item_url)}'
+        download_image_to_folder(item_url, path, payload)
 
 
 def main():
@@ -52,7 +52,7 @@ def main():
         'api_key': API_KEY_NASA
     }
     fetch_nasa_apod_image(payload)
-    fetch_nasa_epic_image(API_KEY_NASA)
+    #fetch_nasa_epic_image(payload)
 
 
 if __name__ == '__main__':
