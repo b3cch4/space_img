@@ -6,7 +6,7 @@ def get_extension(url):
     '''Функция, возвращающая расширение файла'''
     full_url = unquote(url)
     path_of_url = urlparse(full_url).path
-    full_name_of_picture = os.path.split(path_of_url)[-1]
-    full_extension = os.path.splitext(full_name_of_picture)[-1]
-    extension = full_extension[1:]
+    name_of_image = os.path.split(path_of_url)[-1]
+    extension_with_dot = os.path.splitext(name_of_image)[-1]
+    extension = extension_with_dot[1:]
     return extension
