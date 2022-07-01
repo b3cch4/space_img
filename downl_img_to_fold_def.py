@@ -1,7 +1,7 @@
 import os, requests
 
 
-def download_images_to_folder(url, path):
+def download_image_to_folder(url, path):
     '''Функция загружает фотографии по ссылке, полученной в качестве аргумента <url>'''
     os.makedirs(os.path.dirname(path), exist_ok=True)
     response = requests.get(url)
