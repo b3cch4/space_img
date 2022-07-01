@@ -11,12 +11,13 @@ def fetch_nasa_apod_image(payload):
     url_apod = 'https://api.nasa.gov/planetary/apod'
     response = requests.get(url_apod, params=payload)
     response.raise_for_status()
-    if isinstance(response.json(), dict):
+    response_json = response.json()
+    if isinstance(response_json, dict):
         serial_number = datetime.now().date()
         path = f'images/apod/{serial_number}.{get_extension(response.json()["url"])}'
         download_image_to_folder(response.json()['url'], path)
     else:
-        for serial_number, response in enumerate(response.json()):
+        for serial_number, response in enumerate(response_json):
             path = f'images/apod/{serial_number}.{get_extension(response["url"])}'
             download_image_to_folder(response['url'], path)
         
