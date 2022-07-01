@@ -1,4 +1,5 @@
-import os, requests
+import os
+import requests
 from datetime import datetime
 from urllib.parse import urlparse, unquote
 from downl_img_to_fold_def import download_image_to_folder

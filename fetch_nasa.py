@@ -1,4 +1,5 @@
-import os, requests
+import os
+import requests
 from datetime import datetime
 from urllib.parse import urlparse, unquote
 from downl_img_to_fold_def import download_image_to_folder
@@ -14,14 +15,16 @@ def fetch_nasa_apod_image(payload):
     response_json = response.json()
     if isinstance(response_json, dict):
         serial_number = datetime.now().date()
-        path = f'images/apod/{serial_number}.{get_extension(response.json()["url"])}'
+        path = f'images/apod/{serial_number}.\
+            {get_extension(response.json()["url"])}'
         download_image_to_folder(response.json()['url'], path, payload)
     else:
         for serial_number, response in enumerate(response_json):
-            path = f'images/apod/{serial_number}.{get_extension(response["url"])}'
+            path = f'images/apod/{serial_number}.\
+                {get_extension(response["url"])}'
             download_image_to_folder(response['url'], path, payload)
-        
-        
+
+
 def fetch_nasa_epic_image(payload):
     '''Функция получает фотографии NASA из раздела =EPIC='''
     url_epic = f'https://api.nasa.gov/EPIC/api/natural'
@@ -47,13 +50,13 @@ def main():
     load_dotenv()
     API_KEY_NASA = os.getenv('API_KEY_NASA')
     payload_apod = {
-        'start_date': '', 
+        'start_date': '',
         'end_date': '',
         'api_key': API_KEY_NASA
     }
     payload = {'api_key': API_KEY_NASA}
     fetch_nasa_apod_image(payload_apod)
-    #fetch_nasa_epic_image(payload)
+    fetch_nasa_epic_image(payload)
 
 
 if __name__ == '__main__':
