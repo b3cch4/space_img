@@ -6,8 +6,9 @@ from get_extension_def import get_extension
 from dotenv import load_dotenv
 
 
-def fetch_nasa_apod_image(url_apod, payload):
+def fetch_nasa_apod_image(payload):
     '''Функция получает фотографии NASA из раздела =APOD='''
+    url_apod = 'https://api.nasa.gov/planetary/apod'
     response = requests.get(url_apod, params=payload)
     response.raise_for_status()
     if isinstance(response.json(), dict):
@@ -20,8 +21,9 @@ def fetch_nasa_apod_image(url_apod, payload):
             download_image_to_folder(response['url'], path)
         
         
-def fetch_nasa_epic_image(url_epic, api_key):
+def fetch_nasa_epic_image(api_key):
     '''Функция получает фотографии NASA из раздела =EPIC='''
+    url_epic = f'https://api.nasa.gov/EPIC/api/natural?api_key={api_key}'
     response = requests.get(url_epic)
     response.raise_for_status()
     list_of_epic = []
@@ -48,10 +50,8 @@ def main():
         #'end_date': '2022-01-04',
         'api_key': API_KEY_NASA
     }
-    url_apod = 'https://api.nasa.gov/planetary/apod'
-    url_epic = f'https://api.nasa.gov/EPIC/api/natural?api_key={API_KEY_NASA}'
-    fetch_nasa_apod_image(url_apod, payload)
-    fetch_nasa_epic_image(url_epic, API_KEY_NASA)
+    fetch_nasa_apod_image(payload)
+    fetch_nasa_epic_image(API_KEY_NASA)
 
 
 if __name__ == '__main__':
