@@ -46,12 +46,13 @@ def fetch_nasa_epic_image(payload):
 def main():
     load_dotenv()
     API_KEY_NASA = os.getenv('API_KEY_NASA')
-    payload = {
-        #'start_date': '2022-01-01', 
-        #'end_date': '2022-01-04',
+    payload_apod = {
+        'start_date': '', 
+        'end_date': '',
         'api_key': API_KEY_NASA
     }
-    fetch_nasa_apod_image(payload)
+    payload = {'api_key': API_KEY_NASA}
+    fetch_nasa_apod_image(payload_apod)
     #fetch_nasa_epic_image(payload)
 
 
