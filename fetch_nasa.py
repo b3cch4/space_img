@@ -7,21 +7,19 @@ from get_extension_def import get_extension
 from dotenv import load_dotenv
 
 
-def fetch_nasa_apod_image(payload):
-    '''Функция получает фотографии NASA из раздела =APOD='''
-    url_apod = 'https://api.nasa.gov/planetary/apod'
-    response = requests.get(url_apod, params=payload)
-    response.raise_for_status()
-    response_json = response.json()
-    if isinstance(response_json, dict):
-        serial_number = datetime.now().date()
-        path = f'images/apod/{serial_number}.\
-            {get_extension(response.json()["url"])}'
-        download_image_to_folder(response.json()['url'], path, payload)
-    else:
-        for serial_number, response in enumerate(response_json):
-            path = f'images/apod/{serial_number}.\
-                {get_extension(response["url"])}'
+def fetch_nasa_apod_image(response_json, payload):
+    '''Функция получает одну фотографию NASA из раздела =APOD='''
+    serial_number = datetime.now().date()
+    extension = get_extension(response_json["url"])
+    path = f'images/apod/{serial_number}.{extension}'
+    download_image_to_folder(response_json['url'], path, payload)
+    
+
+def fetch_nasa_apod_images(response_json, payload):
+    '''Функция получает список фотографий NASA из раздела =APOD='''
+    for serial_number, response in enumerate(response_json):
+            extension = get_extension(response["url"])
+            path = f'images/apod/{serial_number}.{extension}'
             download_image_to_folder(response['url'], path, payload)
 
 
@@ -55,7 +53,14 @@ def main():
         'api_key': API_KEY_NASA
     }
     payload = {'api_key': API_KEY_NASA}
-    fetch_nasa_apod_image(payload_apod)
+    url_apod = 'https://api.nasa.gov/planetary/apod'
+    response = requests.get(url_apod, params=payload_apod)
+    response.raise_for_status()
+    response_json = response.json()
+    if isinstance(response_json, dict):
+        fetch_nasa_apod_image(response_json, payload_apod)
+    else:
+        fetch_nasa_apod_images(response_json, payload_apod)
     fetch_nasa_epic_image(payload)
 
 
