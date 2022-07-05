@@ -1,7 +1,8 @@
-import os, requests
+import os
+import requests
 from datetime import datetime
 from urllib.parse import urlparse, unquote
-from downl_img_to_fold_def import download_images_to_folder
+from downl_img_to_fold_def import download_image_to_folder
 from get_extension_def import get_extension
 
 
@@ -16,7 +17,8 @@ def fetch_spacex_last_launch():
                 break
         for serial_number, link in enumerate(list_of_spacex_links):
             path = f'images/spacex/{serial_number}.{get_extension(link)}'
-            download_images_to_folder(link, path)
+            payload = {}
+            download_image_to_folder(link, path, payload)
 
 
 def main():
