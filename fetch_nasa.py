@@ -55,11 +55,11 @@ def main():
     url_apod = 'https://api.nasa.gov/planetary/apod'
     response = requests.get(url_apod, params=payload_apod)
     response.raise_for_status()
-    formatted_response = response.json()
-    if isinstance(formatted_response, dict):
-        fetch_nasa_apod_image(formatted_response, payload_apod)
+    response_from_apod = response.json()
+    if isinstance(response_from_apod, dict):
+        fetch_nasa_apod_image(response_from_apod, payload_apod)
     else:
-        fetch_nasa_apod_images(formatted_response, payload_apod)
+        fetch_nasa_apod_images(response_from_apod, payload_apod)
     fetch_nasa_epic_image(payload)
 
 
