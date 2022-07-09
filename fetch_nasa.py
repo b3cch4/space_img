@@ -2,7 +2,7 @@ import os
 import requests
 from datetime import datetime
 from download_image import download_image_to_folder
-from get_extension_def import get_extension
+from get_extension import get_extension
 from dotenv import load_dotenv
 
 
@@ -22,9 +22,7 @@ def fetch_nasa_epic_image(payload):
     urls_of_epic = []
     for item_response in response.json():
         name = item_response['image']
-        print(name)
         date_time = datetime.fromisoformat(item_response['date'])
-        print(date_time)
         year = date_time.strftime("%Y")
         month = date_time.strftime("%m")
         day = date_time.strftime("%d")
