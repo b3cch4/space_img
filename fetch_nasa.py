@@ -1,7 +1,6 @@
 import os
 import requests
 from datetime import datetime
-from urllib.parse import urlparse, unquote
 from download_image import download_image_to_folder
 from get_extension_def import get_extension
 from dotenv import load_dotenv
@@ -25,7 +24,7 @@ def fetch_nasa_apod_images(response_json, payload):
 
 def fetch_nasa_epic_image(payload):
     '''Функция получает фотографии NASA из раздела =EPIC='''
-    url_epic = f'https://api.nasa.gov/EPIC/api/natural'
+    url_epic = 'https://api.nasa.gov/EPIC/api/natural'
     response = requests.get(url_epic, payload)
     response.raise_for_status()
     list_of_epic = []
@@ -56,11 +55,11 @@ def main():
     url_apod = 'https://api.nasa.gov/planetary/apod'
     response = requests.get(url_apod, params=payload_apod)
     response.raise_for_status()
-    response_json = response.json()
-    if isinstance(response_json, dict):
-        fetch_nasa_apod_image(response_json, payload_apod)
+    formatted_response = response.json()
+    if isinstance(formatted_response, dict):
+        fetch_nasa_apod_image(formatted_response, payload_apod)
     else:
-        fetch_nasa_apod_images(response_json, payload_apod)
+        fetch_nasa_apod_images(formatted_response, payload_apod)
     fetch_nasa_epic_image(payload)
 
 
