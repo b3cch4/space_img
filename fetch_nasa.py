@@ -14,14 +14,6 @@ def fetch_nasa_apod_image(response_json, payload):
     download_image_to_folder(response_json['url'], path, payload)
 
 
-def fetch_nasa_apod_images(response_json, payload):
-    '''Функция получает список фотографий NASA из раздела =APOD='''
-    for serial_number, response in enumerate(response_json):
-        extension = get_extension(response["url"])
-        path = f'images/apod/{serial_number}.{extension}'
-        download_image_to_folder(response['url'], path, payload)
-
-
 def fetch_nasa_epic_image(payload):
     '''Функция получает фотографии NASA из раздела =EPIC='''
     url_epic = 'https://api.nasa.gov/EPIC/api/natural'
@@ -59,7 +51,10 @@ def main():
     if isinstance(response_from_apod, dict):
         fetch_nasa_apod_image(response_from_apod, payload_apod)
     else:
-        fetch_nasa_apod_images(response_from_apod, payload_apod)
+        for serial_number, response in enumerate(response_from_apod):
+            extension = get_extension(response["url"])
+            path = f'images/apod/{serial_number}.{extension}'
+            download_image_to_folder(response['url'], path, payload)
     fetch_nasa_epic_image(payload)
 
 
