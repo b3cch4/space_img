@@ -2,7 +2,7 @@ import os
 import requests
 from datetime import datetime
 from urllib.parse import urlparse, unquote
-from downl_img_to_fold_def import download_image_to_folder
+from download_image import download_image_to_folder
 from get_extension_def import get_extension
 from dotenv import load_dotenv
 
